@@ -720,7 +720,7 @@ class Api:
             cuda = {'error': f'{err}'}
         return models.MemoryResponse(ram=ram, cuda=cuda)
 
-    def launch(self, server_name, port):
+    def launch(self, server_name, port, root_path):
         self.app.include_router(self.router)
         uvicorn.run(self.app, host=server_name, port=port, timeout_keep_alive=shared.cmd_opts.timeout_keep_alive)
 
