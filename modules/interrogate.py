@@ -198,20 +198,20 @@ class InterrogateModels:
 
             res = caption
 
-            clip_image = self.clip_preprocess(pil_image).unsqueeze(0).type(self.dtype).to(devices.device_interrogate)
+            # clip_image = self.clip_preprocess(pil_image).unsqueeze(0).type(self.dtype).to(devices.device_interrogate)
 
-            with torch.no_grad(), devices.autocast():
-                image_features = self.clip_model.encode_image(clip_image).type(self.dtype)
+            # with torch.no_grad(), devices.autocast():
+            #     image_features = self.clip_model.encode_image(clip_image).type(self.dtype)
 
-                image_features /= image_features.norm(dim=-1, keepdim=True)
+            #     image_features /= image_features.norm(dim=-1, keepdim=True)
 
-                for cat in self.categories():
-                    matches = self.rank(image_features, cat.items, top_count=cat.topn)
-                    for match, score in matches:
-                        if shared.opts.interrogate_return_ranks:
-                            res += f", ({match}:{score/100:.3f})"
-                        else:
-                            res += f", {match}"
+            #     for cat in self.categories():
+            #         matches = self.rank(image_features, cat.items, top_count=cat.topn)
+            #         for match, score in matches:
+            #             if shared.opts.interrogate_return_ranks:
+            #                 res += f", ({match}:{score/100:.3f})"
+            #             else:
+            #                 res += f", {match}"
 
         except Exception:
             errors.report("Error interrogating", exc_info=True)
